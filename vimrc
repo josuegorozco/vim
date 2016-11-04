@@ -126,6 +126,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set magic
 
 "}}}
 
@@ -198,10 +199,6 @@ set showbreak=...
 set tw=0 wrap linebreak
 set list
 set listchars=tab:▸\ ,trail:·,extends:>,precedes:<
-
-" let delimitMate_expand_cr = 1
-" let delimitMate_expand_space = 1
-" let delimitMate_balance_matchpairs = 1
 
 "}}}
 
@@ -1293,6 +1290,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit="vertical"
+
+let g:snips_author='Josue Orozco'
+let g:snips_email='jorozco@surgeforward.com'
 
 "}}}
 
