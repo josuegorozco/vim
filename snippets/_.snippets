@@ -1,0 +1,1051 @@
+snippet /*
+	/*
+	|--------------------------------------------------------------------------
+	| ${1}
+	|--------------------------------------------------------------------------
+	|
+	| ${2}
+	|
+	*/
+snippet <!
+	<!---// ${1} //-->
+
+snippet callback
+	Custom callback function to execute after retrieving data.
+
+snippet refresh
+	Determines if datacontext should use local storage data, or fetch via http.
+
+snippet canexecute
+	Determines if method can be executed and disables/enables UI elements accordingly.
+
+snippet jdef
+	Implements jQuery's Deferred promise, and resolves or rejects based on response.
+
+snippet :script
+	<script type="text/javascript">
+		${0}
+	</script>
+
+snippet :script.src
+	<script type="text/javascript" src="${1}"></script>
+
+snippet :link.href
+	<link href="${1}" rel="stylesheet">
+
+snippet :input.hidden
+	<input type="hidden" name="${1}" value="${2}" />
+
+snippet :dotenv
+	APP_ENV=local
+	APP_DEBUG=true
+	APP_LOG_LEVEL=debug
+	APP_URL=http://localhost
+	APP_PORT=3000
+
+	DB_HOST=localhost
+	DB_PORT=27017
+	DB_DATABASE=localhost
+	DB_USERNAME=
+	DB_PASSWORD=
+
+snippet :esl.import-no-extraneous-dependencies
+	/* eslint-disable import/no-extraneous-dependencies */
+
+# Bootstrap
+snippet :html Bootstrap
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+			<title>${1:Bootstrap 101 Template}</title>
+
+			<!-- Bootstrap -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+			<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			<![endif]-->
+		</head>
+		<body>
+			${2:<h1>Hello, world!</h1>}
+
+			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+			<!-- Include all compiled plugins (below), or include individual files as needed -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		</body>
+	</html>
+snippet :viewport Bootstrap
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+snippet :cont Bootstrap
+	<div class="container">
+		${1:...}
+	</div>
+
+snippet :contf
+	<div class="container-fluid">
+		${1:...}
+	</div>
+
+snippet :row
+	<div class="row">
+		${1:...}
+	</div>
+
+snippet :colxs Bootstrap
+	<div class="col-xs-${1:1}">
+		${2:...}
+	</div>
+
+snippet :colsm Bootstrap
+	<div class="col-sm-${1:1}">
+		${2:...}
+	</div>
+
+snippet :colmd Bootstrap
+	<div class="col-md-${1:1}">
+		${2:...}
+	</div>
+
+snippet :collg Bootstrap
+	<div class="col-lg-${1:1}">
+		${2:...}
+	</div>
+
+snippet :h1 Bootstrap
+	<h1>${1:Heading}</h1>
+
+snippet :h2 Bootstrap
+	<h2>${1:Heading}</h2>
+
+snippet :h3 Bootstrap
+	<h3>${1:Heading}</h3>
+
+snippet :h4 Bootstrap
+	<h4>${1:Heading}</h4>
+
+snippet :h5 Bootstrap
+	<h5>${1:Heading}</h5>
+
+snippet :h6 Bootstrap
+	<h6>${1:Heading}</h6>
+
+snippet :h1.small Bootstrap
+	<h1>${1:Heading} <small>${2:Secondary text}</small></h1>
+
+snippet :h2.small Bootstrap
+	<h2>${1:Heading} <small>${2:Secondary text}</small></h2>
+
+snippet :h3.small Bootstrap
+	<h3>${1:Heading} <small>${2:Secondary text}</small></h3>
+
+snippet :h4.small Bootstrap
+	<h4>${1:Heading} <small>${2:Secondary text}</small></h4>
+
+snippet :h5.small Bootstrap
+	<h5>${1:Heading} <small>${2:Secondary text}</small></h5>
+
+snippet :h6.small Bootstrap
+	<h6>${1:Heading} <small>${2:Secondary text}</small></h6>
+
+snippet :p Bootstrap
+	<p>
+		${1:...}
+	</p>
+
+snippet :addr Bootstrap
+	<address>
+		<strong>${1:ACME, Inc.}</strong><br>
+		${2:123 Wall St}<br>
+		${3:Anytown, CA 94107}<br>
+		<abbr title="Phone">P:</abbr> ${4:(123) 456-7890}
+	</address>
+
+	<address>
+		<strong>${5:Full Name}</strong><br>
+		<a href="mailto:#">${6:first.last@example.com}</a>
+	</address>
+
+snippet :tbl Bootstrap
+	<table class="table">
+		${1:...}
+	</table>
+
+snippet :tbl.striped Bootstrap
+	<table class="table table-striped">
+		${1:...}
+	</table>
+
+snippet :tbl.bordered Bootstrap
+	<table class="table table-bordered">
+		${1:...}
+	</table>
+
+snippet :tbl.hover Bootstrap
+	<table class="table table-hover">
+		${1:...}
+	</table>
+
+snippet :tbl.condensed Bootstrap
+	<table class="table table-condensed">
+		${1:...}
+	</table>
+
+snippet :tr.active Bootstrap
+	<tr class="active">${1:...}</tr>
+
+snippet :tr.success Bootstrap
+	<tr class="success">${1:...}</tr>
+
+snippet :tr.warning Bootstrap
+	<tr class="warning">${1:...}</tr>
+
+snippet :tr.danger Bootstrap
+	<tr class="danger">${1:...}</tr>
+
+snippet :tr.info Bootstrap
+	<tr class="info">${1:...}</tr>
+
+snippet :td.active Bootstrap
+	<td class="active">${1:...}</td>
+
+snippet :td.success Bootstrap
+	<td class="success">${1:...}</td>
+
+snippet :td.warning Bootstrap
+	<td class="warning">${1:...}</td>
+
+snippet :td.danger Bootstrap
+	<td class="danger">${1:...}</td>
+
+snippet :td.info Bootstrap
+	<td class="info">${1:...}</td>
+
+snippet :th.active Bootstrap
+	<th class="active">${1:...}</th>
+
+snippet :th.success Bootstrap
+	<th class="success">${1:...}</th>
+
+snippet :th.warning Bootstrap
+	<th class="warning">${1:...}</th>
+
+snippet :th.danger Bootstrap
+	<th class="danger">${1:...}</th>
+
+snippet :th.info Bootstrap
+	<th class="info">${1:...}</th>
+
+snippet :tbl.responsive Bootstrap
+	<div class="table-responsive">
+		<table class="table">
+			${1:...}
+		</table>
+	</div>
+
+snippet :frm Bootstrap
+	<form>
+		<div class="form-group">
+			<label for="$3">${1:Email address}</label>
+			<input type="${2:email}" class="form-control" id="${3:exampleInputEmail1}" placeholder="${4:Enter email}">
+		</div>
+		<div class="form-group">
+			<label for="$7">${5:Password}</label>
+			<input type="${6:password}" class="form-control" id="${7:exampleInputPassword1}" placeholder="${8:Password}">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputFile">File input</label>
+			<input type="file" id="exampleInputFile">
+			<p class="help-block">Example block-level help text here.</p>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox"> Check me out
+			</label>
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+
+snippet :frm.inline Bootstrap
+	<form class="form-inline">
+		<div class="form-group">
+			<label for="$3">${1:Email address}</label>
+			<input type="${2:email}" class="form-control" id="${3:exampleInputEmail1}" placeholder="${4:Enter email}">
+		</div>
+		<div class="form-group">
+			<label for="$7">${5:Password}</label>
+			<input type="${6:password}" class="form-control" id="${7:exampleInputPassword1}" placeholder="${8:Password}">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputFile">File input</label>
+			<input type="file" id="exampleInputFile">
+			<p class="help-block">Example block-level help text here.</p>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox"> Check me out
+			</label>
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+
+snippet :frm.hz Bootstrap
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+				<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-10">
+				<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<div class="checkbox">
+					<label>
+						<input type="checkbox"> Remember me
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-default">Sign in</button>
+			</div>
+		</div>
+	</form>
+
+snippet :inpt Bootstrap
+	<input type="text" class="form-control" placeholder="${1:Text input}">
+
+snippet :inpt.help Bootstrap
+	<label class="sr-only" for="$2">${1:Input with help text}</label>
+	<input type="text" id="${2:inputHelpBlock}" class="form-control" aria-describedby="$3">
+	<span id="${3:helpBlock}" class="help-block">${4:A block of help text that breaks onto a new line and may extend beyond one line.}</span>
+
+snippet :txta Bootstrap
+	<textarea class="form-control" rows="3"></textarea>
+
+snippet :chk Bootstrap
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" value="${1:}">
+			${2:Option one is this and that&mdash;be sure to include why it's great}
+		</label>
+	</div>
+
+snippet :chk.inline Bootstrap
+	<label class="checkbox-inline">
+		<input type="checkbox" id="${1:inlineCheckbox1}" value="${2:option1}"> ${3:1}
+	</label>
+
+snippet :rdo Bootstrap
+	<div class="radio">
+		<label>
+			<input type="radio" name="${1:optionsRadios}" id="${2:optionsRadios1}" value="${3:option1}" checked>
+			${4:Option one is this and that&mdash;be sure to include why it's great}
+		</label>
+	</div>
+	<div class="radio">
+		<label>
+			<input type="radio" name="${5:optionsRadios}" id="${6:optionsRadios2}" value="${7:option2}">
+			${8:Option two can be something else and selecting it will deselect option one}
+		</label>
+	</div>
+
+snippet :rdo.inline Bootstrap
+	<label class="radio-inline">
+		<input type="radio" name="${1:inlineRadioOptions}" id="${2:inlineRadio1}" value="${3:option1}"> ${4:1}
+	</label>
+	<label class="radio-inline">
+		<input type="radio" name="${5:inlineRadioOptions}" id="${6:inlineRadio2}" value="${7:option2}"> ${8:2}
+	</label>
+
+snippet :sel Bootstrap
+	<select class="form-control">
+		<option>${1:1}</option>
+		<option>${2:2}</option>
+	</select>
+
+snippet :sel.mul Bootstrap
+	<select multiple class="form-control">
+		<option>${1:1}</option>
+		<option>${2:2}</option>
+	</select>
+
+snippet :frm.ctrl.static Bootstrap
+	<div class="form-group">
+		<label class="col-sm-2 control-label">${1:Email}</label>
+		<div class="col-sm-10">
+			<p class="form-control-static">${2:email@example.com}</p>
+		</div>
+	</div>
+
+snippet :btn Bootstrap
+	<button class="btn btn-default" type="submit">${1:Button}</button>
+
+snippet :btna Bootstrap
+	<a class="btn btn-default" href="${1:#}" role="button">${2:Link}</a>
+
+snippet :btn.inpt Bootstrap
+	<input class="btn btn-default" type="button" value="${1:Input}">
+
+snippet :btn.submit Bootstrap
+	<input class="btn btn-default" type="submit" value="${1:Submit}">
+
+snippet :btn.default Bootstrap
+	<button type="button" class="btn btn-default">${1:Default}</button>
+
+snippet :btna.default Bootstrap
+	<a href="${1:#}" class="btn btn-default" role="button">${2:Default}</a>
+
+snippet :btn.primary Bootstrap
+	<button type="button" class="btn btn-primary">Primary</button>
+
+snippet :btna.primary Bootstrap
+	<a href="${1:#}" class="btn btn-primary" role="button">${2:Primary}</a>
+
+snippet :btn.success Bootstrap
+	<button type="button" class="btn btn-success">${1:Success}</button>
+
+snippet :btna.success Description
+	<a href="${1:#}" class="btn btn-success" role="button">${2:Success}</a>
+
+snippet :btn.info Bootstrap
+	<button type="button" class="btn btn-info">${1:Info}</button>
+
+snippet :btna.info Bootstrap
+	<a href="${1:#}" class="btn btn-info" role="button">${2:Info}</a>
+
+snippet :btn.warning Bootstrap
+	<button type="button" class="btn btn-warning">${1:Warning}</button>
+
+snippet :btna.warning Bootstrap
+	<a href="${1:#}" class="btn btn-warning" role="button">${2:Warning}</a>
+
+snippet :btn.danger Bootstrap
+	<button type="button" class="btn btn-danger">${1:Danger}</button>
+
+snippet :btna.danger Bootstrap
+	<a href="${1:#}" class="btn btn-danger" role="button">${2:Danger}</a>
+
+snippet :btn.link Bootstrap
+	<button type="button" class="btn btn-link">${1:Link}</button>
+
+snippet :btna.link Bootstrap
+	<a href="${1:#}" class="btn btn-link" role="button">${2:Link}</a>
+
+snippet :dropdown Bootstrap
+	<div class="dropdown">
+		<button class="btn btn-default dropdown-toggle" type="button" id="${1:dropdownMenu1}" data-toggle="dropdown" aria-expanded="true">
+			${2:Dropdown}
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="$1">
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="${3:#}">${4:Action}</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="${5:#}">${6:Another action}</a></li>
+		</ul>
+	</div>
+
+snippet :btn.grp Bootstrap
+	<div class="btn-group" role="group" aria-label="${1:...}">
+		<button type="button" class="btn btn-default">${2:Left}</button>
+		<button type="button" class="btn btn-default">${3:Middle}</button>
+		<button type="button" class="btn btn-default">${4:Right}</button>
+	</div>
+
+snippet :btna.grp Bootstrap
+	<div class="btn-group" role="group" aria-label="${1:...}">
+		<a class="btn btn-default" href="${2:#}" role="button">${3:Left}</a>
+		<a class="btn btn-default" href="${4:#}" role="button">${5:Middle}</a>
+		<a class="btn btn-default" href="${6:#}" role="button">${7:Right}</a>
+	</div>
+
+snippet :btn.tlbr Bootstrap
+	<div class="btn-toolbar" role="toolbar" aria-label="${1:...}">
+		<div class="btn-group" role="group" aria-label="${2:...}">${3:...}</div>
+		<div class="btn-group" role="group" aria-label="${4:...}">${5:...}</div>
+		<div class="btn-group" role="group" aria-label="${6:...}">${7:...}</div>
+	</div>
+
+snippet :btn.dropdown Bootstrap
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			${1:Action} <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="${1:#}">${2:Action}</a></li>
+			<li><a href="${3:#}">${4:Another action}</a></li>
+			<li><a href="${5:#}">${6:Something else here}</a></li>
+			<li class="divider"></li>
+			<li><a href="${7:#}">${8:Separated link}</a></li>
+		</ul>
+	</div>
+
+snippet :inpt.grp Bootstrap
+	<div class="input-group">
+		<span class="input-group-addon">${1:$}</span>
+		<input type="text" class="form-control" aria-label="${2:Amount (to the nearest dollar)}">
+		<span class="input-group-addon">${3:.00}</span>
+	</div>
+
+snippet :inpt.grp.chk Bootstrap
+	<div class="input-group">
+		<span class="input-group-addon">
+			<input type="checkbox" aria-label="${1:...}">
+		</span>
+		<input type="text" class="form-control" aria-label="${2:...}">
+	</div>
+
+snippet :inpt.grp.rdo Bootstrap
+	<div class="input-group">
+		<span class="input-group-addon">
+			<input type="radio" aria-label="${1:...}">
+		</span>
+		<input type="text" class="form-control" aria-label="${2:...}">
+	</div>
+
+snippet :inpt.grp.btn Bootstrap
+	<div class="input-group">
+		<input type="text" class="form-control" placeholder="${1:Search for...}">
+		<span class="input-group-btn">
+			<button class="btn btn-default" type="button">${2:Go!}</button>
+		</span>
+	</div>
+
+snippet :inpt.grp.btn.dropdown Bootstrap
+	<div class="input-group">
+		<input type="text" class="form-control" aria-label="${1:...}">
+		<div class="input-group-btn">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">${2:Action} <span class="caret"></span></button>
+			<ul class="dropdown-menu dropdown-menu-right" role="menu">
+				<li><a href="${3:#}">${4:Action}</a></li>
+				<li><a href="${5:#}">${6:Another action}</a></li>
+				<li><a href="${6:#}">${8:Something else here}</a></li>
+				<li class="divider"></li>
+				<li><a href="${9:#}">${10:Separated link}</a></li>
+			</ul>
+		</div><!-- /btn-group -->
+	</div>
+
+snippet :navtabs Bootstrap
+	<ul class="nav nav-tabs">
+		<li role="presentation" class="active"><a href="${1:#}">${2:Home}</a></li>
+		<li role="presentation"><a href="${3:#}">${4:Profile}</a></li>
+		<li role="presentation"><a href="${5:#}">${6:Messages}</a></li>
+	</ul>
+
+snippet :bcrumb Bootstrap
+	<ol class="breadcrumb">
+		<li><a href="${1:#}">${2:Home}</a></li>
+		<li><a href="${3:#}">${4:Library}</a></li>
+		<li class="active">${5:Data}</li>
+	</ol>
+
+snippet :pagination Bootstrap
+	<nav>
+		<ul class="pagination">
+			<li class="disabled">
+				<a href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<li class="active"><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+			<li><a href="#">5</a></li>
+			<li>
+				<a href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+snippet :lbl Bootstrap
+	<span class="label label-default">${1:Default}</span>
+
+snippet :lbl.def Bootstrap
+	<span class="label label-default">${1:Default}</span>
+
+snippet :lbl.prim Bootstrap
+	<span class="label label-primary">${1:Primary}</span>
+
+snippet :lbl.succ Bootstrap
+	<span class="label label-success">${1:Success}</span>
+
+snippet :lbl.inf Bootstrap
+	<span class="label label-info">${1:Info}</span>
+
+snippet :lbl.warn Bootstrap
+	<span class="label label-warning">${1:Warning}</span>
+
+snippet :lbl.dang Bootstrap
+	<span class="label label-danger">${1:Danger}</span>
+
+snippet :alert Bootstrap
+	<div class="alert alert-success" role="alert">${1:...}</div>
+
+snippet :alert.succ Bootstrap
+	<div class="alert alert-success" role="alert">${1:...}</div>
+
+snippet :alert.inf Bootstrap
+	<div class="alert alert-info" role="alert">${1:...}</div>
+
+snippet :alert.warn Bootstrap
+	<div class="alert alert-warning" role="alert">${1:...}</div>
+
+snippet :alert.dang Bootstrap
+	<div class="alert alert-danger" role="alert">${1:...}</div>
+
+snippet :alert.close Bootstrap
+	<div class="alert alert-${1:warning} alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>${2:Warning!}</strong> ${3:Better check yourself, you're not looking too good.}
+	</div>
+
+snippet :prg Bootstrap
+	<div class="progress">
+		<div class="progress-bar" role="progressbar" aria-valuenow="${1:60}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%;">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.succ Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="${1:40}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.inf Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="${1:20}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.warn Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="${1:60}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.dang Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="${1:80}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.striped Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="${1:40}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.striped.active Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="${1:45}" aria-valuemin="${2:0}" aria-valuemax="${3:100}" style="width: $1%">
+			<span class="sr-only">$1% Complete</span>
+		</div>
+	</div>
+
+snippet :prg.stacked Bootstrap
+	<div class="progress">
+		<div class="progress-bar progress-bar-success" style="width: ${1:35}%">
+			<span class="sr-only">$1% Complete (success)</span>
+		</div>
+		<div class="progress-bar progress-bar-warning progress-bar-striped" style="width: ${2:20}%">
+			<span class="sr-only">$2% Complete (warning)</span>
+		</div>
+		<div class="progress-bar progress-bar-danger" style="width: ${3:10}%">
+			<span class="sr-only">$3% Complete (danger)</span>
+		</div>
+	</div>
+
+snippet :lstgrp Bootstrap
+	<ul class="list-group">
+		<li class="list-group-item">${1:Cras justo odio}</li>
+		<li class="list-group-item">${2:Dapibus ac facilisis in}</li>
+		<li class="list-group-item">${3:Morbi leo risus}</li>
+		<li class="list-group-item">${4:Porta ac consectetur ac}</li>
+		<li class="list-group-item">${5:Vestibulum at eros}</li>
+	</ul>
+
+snippet :lstgrp.item Bootstrap
+	<li class="list-group-item">${1:Cras justo odio}</li>
+
+snippet :pnl Bootstrap
+	<div class="panel panel-default">
+		<div class="panel-body">
+			${1:Basic panel example}
+		</div>
+	</div>
+
+snippet :pnl.hdr Bootstrap
+	<div class="panel-heading">${1:Panel heading without title}</div>
+
+snippet :pnl.hdr.title Bootstrap
+	<div class="panel-heading">
+		<h3 class="panel-title">${1:Panel title}</h3>
+	</div>
+
+snippet :pnl.body Bootstrap
+	<div class="panel-body">
+		${1:Panel content}
+	</div>
+
+snippet :pnl.footer Bootstrap
+	<div class="panel-footer">${1:Panel footer}</div>
+
+snippet :pnl.def Bootstrap
+	<div class="panel panel-default">
+		<div class="panel-body">
+			${1:Basic panel example}
+		</div>
+	</div>
+
+snippet :pnl.prim Bootstrap
+	<div class="panel panel-primary">${1:...}</div>
+
+snippet :pnl.succ Bootstrap
+	<div class="panel panel-success">${1:...}</div>
+
+snippet :pnl.inf Bootstrap
+	<div class="panel panel-info">${1:...}</div>
+
+snippet :pnl.warn Bootstrap
+	<div class="panel panel-warning">${1:...}</div>
+
+snippet :pnl.dang Bootstrap
+	<div class="panel panel-danger">${1:...}</div>
+
+snippet :pnl.tbl Bootstrap
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">${1:Panel heading}</div>
+		<div class="panel-body">
+			<p>${2:...}</p>
+		</div>
+
+		<!-- Table -->
+		<table class="table">
+			${3:...}
+		</table>
+	</div>
+
+snippet :well Bootstrap
+	<div class="well">${1:...}</div>
+
+snippet :well.lg Bootstrap
+	<div class="well well-lg">${1:...}</div>
+
+snippet :well.sm Bootstrap
+	<div class="well well-sm">${1:...}</div>
+
+snippet :modal Bootstrap
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">${1:Modal title}</h4>
+				</div>
+				<div class="modal-body">
+					<p>${2:One fine body&hellip;}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">${3:Close}</button>
+					<button type="button" class="btn btn-primary">${4:Save changes}</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+snippet :tab.pnl Bootstrap
+	<div role="tabpanel">
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#${1:home}" aria-controls="$1" role="tab" data-toggle="tab">${2:Home}</a></li>
+			<li role="presentation"><a href="#${3:profile}" aria-controls="$3" role="tab" data-toggle="tab">${4:Profile}</a></li>
+			<li role="presentation"><a href="#${5:messages}" aria-controls="$5" role="tab" data-toggle="tab">${6:Messages}</a></li>
+			<li role="presentation"><a href="#${7:settings}" aria-controls="$7" role="tab" data-toggle="tab">${8:Settings}</a></li>
+		</ul>
+
+		<!-- Tab panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="$1">${9:...}</div>
+			<div role="tabpanel" class="tab-pane" id="$3">${10:...}</div>
+			<div role="tabpanel" class="tab-pane" id="$5">${11:...}</div>
+			<div role="tabpanel" class="tab-pane" id="$7">${12:...}</div>
+		</div>
+
+	</div>
+
+snippet :btn.collapse Bootstrap
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#$2" aria-expanded="false" aria-controls="$2">
+		${1:Button with data-target}
+	</button>
+	<div class="collapse" id="${2:collapseExample}">
+		<div class="well">
+			${3:...}
+		</div>
+	</div>
+
+snippet :btna.collapse Bootstrap
+	<a class="btn btn-primary" data-toggle="collapse" href="#$2" aria-expanded="false" aria-controls="$2">
+		${1:Link with href}
+	</a>
+	<div class="collapse" id="${2:collapseExample}">
+		<div class="well">
+		${3:...}
+		</div>
+	</div>
+
+snippet :accordian Bootstrap
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+		<!-- // Begin Panel Default // -->
+		<div class="panel panel-default">
+
+			<!-- // Begin Panel Heading // -->
+			<div class="panel-heading" role="tab" id="headingOne">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						Collapsible Group Item #1
+					</a>
+				</h4>
+			</div>
+			<!-- // End Panel Heading // -->
+
+			<!-- // Begin Panel Body // -->
+			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				<div class="panel-body">
+					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+				</div>
+			</div>
+			<!-- // End Panel Body // -->
+
+		</div>
+		<!-- // End Panel Default // -->
+
+		<!-- // Begin Panel Default // -->
+		<div class="panel panel-default">
+
+			<!-- // Begin Panel Heading // -->
+			<div class="panel-heading" role="tab" id="headingTwo">
+				<h4 class="panel-title">
+					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						Collapsible Group Item #2
+					</a>
+				</h4>
+			</div>
+			<!-- // End Panel Heading // -->
+
+			<!-- // Begin Panel Body // -->
+			<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+				<div class="panel-body">
+					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+				</div>
+			</div>
+			<!-- // End Panel Body // -->
+
+		</div>
+		<!-- // End Panel Default // -->
+
+		<!-- // Begin Panel Default // -->
+		<div class="panel panel-default">
+
+			<!-- // Begin Panel Heading // -->
+			<div class="panel-heading" role="tab" id="headingThree">
+				<h4 class="panel-title">
+					<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						Collapsible Group Item #3
+					</a>
+				</h4>
+			</div>
+			<!-- // End Panel Heading // -->
+
+			<!-- // Begin Panel Body // -->
+			<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+				<div class="panel-body">
+					Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+				</div>
+			</div>
+			<!-- // End Panel Body // -->
+		</div>
+		<!-- // End Panel Default // -->
+
+	</div>
+
+snippet carousel Bootstrap
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+		</ol>
+		
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox">
+			<div class="item active">
+				<img src="..." alt="...">
+				<div class="carousel-caption">
+					...
+				</div>
+			</div>
+			<div class="item">
+				<img src="..." alt="...">
+				<div class="carousel-caption">
+					...
+				</div>
+			</div>
+			...
+		</div>
+		
+		<!-- Controls -->
+		<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+
+snippet :affix Bootstrap
+	<div data-spy="affix" data-offset-top="${1:60}" data-offset-bottom="${2:200}">
+		${3:...}
+	</div>
+
+
+snippet :r.main React
+	import 'babel-polyfill';
+	import React from 'react';
+	import { render } from 'react-dom';
+	import { Router, browserHistory } from 'react-router';
+	import routes from './routes';
+	import './styles/default.css';
+	import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+	render(
+		<Router history={browserHistory} routes={routes} />,
+		document.getElementById('${1:app}')
+	);
+
+snippet :r.app React
+	import React, { PropTypes } from 'react';
+	import Header from './common/header';
+
+	class App extends React.Component {
+		render () {
+			return (
+				<div className="container-fluid">
+					<Header />
+					{this.props.children}
+				</div>
+			);
+		}
+	}
+
+	App.propTypes = {
+		children: PropTypes.object.isRequired
+	};
+
+	export default App;
+
+snippet :r.routes React
+	import React from 'react';
+	import { Route, IndexRoute } from 'react-router';
+	import App from './components/app';
+	import Dashboard from './components/dashboard';
+	import Profile from './components/profile';
+
+	export default (
+		<Route path="/" component={App}>
+			<IndexRoute component={Dashboard} />
+			<Route path="profile" component={Profile} />
+		</Route>
+	);
+
+snippet :r.route React
+	<Route path="${1:/}" component={${2:App}}>
+		<IndexRoute component={${3:Dashboard}} />
+	</Route>
+
+snippet :r.routepath React
+	<Route path="${1:about} component=${2:About}" />
+
+snippet :r.link React
+	<Link to="${1:/}">${2:...}</Link>
+
+snippet :r.component React
+	import React from 'react';
+
+	class ${1:MyComponent} extends React.Component {
+		render () {
+			return (
+				<div>
+					${2:...}
+				</div>
+			);
+		}
+	}
+
+	export default $1
+
+snippet :r.stateless React
+	import React from 'react';
+
+	const ${1:MyComponent} = () => (
+		<div>
+			${2:...}
+		</div>
+	);
+
+	export default $1;
+snippet :r.header React
+	import React from 'react';
+	import { Link, IndexLink } from 'react-router';
+
+	const Header = () => {
+		return (
+			<nav>
+				<IndexLink to="/" activeClassName="active">Home</IndexLink>
+				{" | "}
+				<Link to="/profile" activeClassName="active">Profile</Link>
+			</nav>
+		);
+	};
+
+	export default Header;
+
+snippet r:reducer React
+	export default function ${1:MyReducer}(state = [], action) {
+		switch (action.type) {
+			case ${2:MY_ACTION}:
+			return [...state, Object.assign({}, action.${3:myAction})];
+
+			defaut:
+				return state;
+		}
+	}

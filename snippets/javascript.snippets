@@ -1,0 +1,275 @@
+snippet #c
+	// ------------------------------------------------------
+	// ${0}
+snippet :cl
+	console.log('${1} => ', $1);
+snippet :clo
+	console.log('${1} => ', JSON.stringify($1, null, 4));
+
+snippet :n.server
+	import 'babel-polyfill';
+	import mongoose from 'mongoose';
+	import express from 'express';
+	import expressWinston from 'express-winston';
+	import bodyParser from 'body-parser';
+	import compress from 'compression';
+	import cors from 'cors';
+	import path from 'path';
+	import dotenv from 'dotenv';
+	import winston from 'winston';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init Config
+	|--------------------------------------------------------------------------
+	|
+	| Load config from:
+	|
+	| 1. Command-line arguments
+	| 2. Environment varibales (.env)
+	|
+	*/
+
+	dotenv.config({ silent: true });
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init Enviroment
+	|--------------------------------------------------------------------------
+	|
+	| Default to local
+	|
+	*/
+
+	const environment = process.env.NODE_ENV || 'local';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init Port
+	|--------------------------------------------------------------------------
+	|
+	| Set server port from environment; defaults to 3000
+	|
+	*/
+
+	const port = process.env.PORT || process.env.APP_PORT || 3000;
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init DB
+	|--------------------------------------------------------------------------
+	|
+	| Set db options
+	|
+	*/
+
+	const dbHost = process.env.DB_HOST || 'localhost';
+	const dbPort = process.env.DB_PORT || 27017;
+	const dbName = process.env.DB_DATABASE || 'localhost';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init Mongoose
+	|--------------------------------------------------------------------------
+	|
+	| Set connection
+	|
+	*/
+
+	mongoose.connect((() => `mongodb://${dbHost}:${dbPort}/${dbName}`)());
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init App
+	|--------------------------------------------------------------------------
+	|
+	| Express Application
+	|
+	*/
+
+	const app = express();
+
+	/*
+	|--------------------------------------------------------------------------
+	| General Logger
+	|--------------------------------------------------------------------------
+	|
+	| Express winston logger. Makes sense to add this BEFORE adding routes.
+	| Error transports are added AFTER routes are configured.
+	|
+	| See https://github.com/bithavoc/express-winston
+	| for more info.
+	|
+	*/
+
+	app.use(expressWinston.logger({
+		transports: [
+			new winston.transports.Console({
+				json: true,
+				colorize: true,
+				handleExceptions: true,
+				level: (environment === 'production' ? 'error' : 'debug')
+			})
+		],
+		level: 'debug',
+		meta: true,
+		expressFormat: true,
+		colorize: true,
+		exitOnError: false
+	}));
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init parsing middleware
+	|--------------------------------------------------------------------------
+	|
+	| Parse incoming request bodies in a middleware before your handlers,
+	| availabe under the req.body property.
+	|
+	| See https://www.npmjs.com/package/body-parser#bodyparserurlencodedoptions
+	| for more info.
+	|
+	*/
+
+	app.use(bodyParser.urlencoded({ extended: true }));
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init JSON parsing
+	|--------------------------------------------------------------------------
+	|
+	| Returns middleware that only parses json. This parser accepts any Unicode
+	| encoding of the body and supports automatic inflation of gzip and deflate
+	| encodings.
+	|
+	| See https://www.npmjs.com/package/body-parser#bodyparserjsonoptions
+	| for more info.
+	|
+	*/
+
+	app.use(bodyParser.json());
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init Compression
+	|--------------------------------------------------------------------------
+	|
+	| Compress response data with gzip
+	|
+	*/
+
+	app.use(compress());
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init CORS
+	|--------------------------------------------------------------------------
+	|
+	| Enalbe ALL CORS requests.
+	|
+	*/
+
+	app.use(cors());
+
+	/*
+	|--------------------------------------------------------------------------
+	| Initial logging
+	|--------------------------------------------------------------------------
+	|
+	| Display initial logging.
+	|
+	*/
+
+	console.log('|--------------------------------------------------------------------------');
+	console.log('| ENVIRONMENT VARIABLES');
+	console.log('|--------------------------------------------------------------------------');
+	Object.keys(process.env).forEach(function (key){
+		console.log(`${key}=${process.env[key]}`);
+	});
+
+	/*
+	|--------------------------------------------------------------------------
+	| Init app.use
+	|--------------------------------------------------------------------------
+	|
+	| Set app.use cases based on environment.
+	|
+	*/
+
+	switch (environment) {
+	case 'staging':
+		console.log('** STAGING **');
+		app.use('/', express.static('./build/'));
+		break;
+	default:
+		console.log('|--------------------------------------------------------------------------');
+		console.log('| DEV');
+		console.log('|--------------------------------------------------------------------------');
+		console.log(`__dirname = ${__dirname}`);
+		console.log(`process.cwd() = ${process.cwd()}`);
+
+		app.use(express.static(path.join(__dirname, '../client')));
+
+		// ------------------------------------------------------
+		// Dynamically include routes
+		/* eslint-disable global-require */
+		require(path.join(__dirname, '/routes/index'))(app);
+		/* eslint-enable global-require */
+
+		app.use(['/app/*', '/app/index.js'], (req, res, next) => {
+			res.status(404).send('Not found.');
+			next();
+		});
+
+		app.use('/*', express.static(path.join(__dirname, '../client/index.html')));
+		break;
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Error Logging
+	|--------------------------------------------------------------------------
+	|
+	| Init error logging after routes are configured.
+	|
+	*/
+
+	app.use(expressWinston.errorLogger({
+		transports: [
+			new winston.transports.Console({
+				json: true,
+				colorize: true,
+				handleExceptions: true,
+				level: (environment === 'production' ? 'error' : 'silly')
+			})
+		],
+		dumpExceptions: true,
+		showStack: true,
+		exitOnError: false
+	}));
+
+	/*
+	|--------------------------------------------------------------------------
+	| Launch Server
+	|--------------------------------------------------------------------------
+	|
+	| Bind and listen for connections on the specified host and port.
+	|
+	*/
+
+	app.listen(port, () => {
+		console.log('|--------------------------------------------------------------------------');
+		console.log('| MongoDB');
+		console.log('| Remember to first start MongoDb server!');
+		console.log('|--------------------------------------------------------------------------');
+		console.log(`HOST=${dbHost}`);
+		console.log(`PORT=${dbPort}`);
+		console.log(`DATABASE=${dbName}`);
+
+		console.log('|--------------------------------------------------------------------------');
+		console.log('| SERVER');
+		console.log('|--------------------------------------------------------------------------');
+		console.log(`Listening on ${process.env.APP_URL}:${process.env.APP_PORT}`);
+	});
+
+	module.exports = app;
