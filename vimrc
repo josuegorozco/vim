@@ -1372,6 +1372,15 @@ let g:neomake_javascript_eslint_maker = {
 	\ '%W%f: line %l\, col %c\, Warning - %m'
 	\ }
 
+let g:neomake_scss_enabled_markers = ['stylelint']
+let g:neomake_scss_stylelint_exe = system('PATH=$(npm bin):$PATH && which stylelint | tr -d "\n"')
+let g:neomake_scss_stylelint_maker = {
+	\ 'args': ['--no-color', '--syntax', 'scss', '--format', 'compact'],
+	\ 'errorformat': '%+P%f,' .
+	\ '%*\s%l:%c  %t  %m,' .
+	\ '%-Q'
+	\ }
+
 "'args': ['--no-color', '--format', 'compact', '--config', '/Users/josue/.eslintrc.js']
 "}}}
 
