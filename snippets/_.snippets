@@ -965,7 +965,6 @@ snippet :r.main React
 		<Router history={browserHistory} routes={routes} />,
 		document.getElementById('${1:app}')
 	);
-
 snippet :r.app React
 	import React, { PropTypes } from 'react';
 	import Header from './common/header';
@@ -986,7 +985,6 @@ snippet :r.app React
 	};
 
 	export default App;
-
 snippet :r.routes React
 	import React from 'react';
 	import { Route, IndexRoute } from 'react-router';
@@ -1000,18 +998,14 @@ snippet :r.routes React
 			<Route path="profile" component={Profile} />
 		</Route>
 	);
-
 snippet :r.route React
 	<Route path="${1:/}" component={${2:App}}>
 		<IndexRoute component={${3:Dashboard}} />
 	</Route>
-
 snippet :r.routepath React
 	<Route path="${1:about} component=${2:About}" />
-
 snippet :r.link React
 	<Link to="${1:/}">${2:...}</Link>
-
 snippet :r.component React
 	import React from 'react';
 
@@ -1026,7 +1020,6 @@ snippet :r.component React
 	}
 
 	export default $1
-
 snippet :r.stateless React
 	import React from 'react';
 
@@ -1052,8 +1045,7 @@ snippet :r.header React
 	};
 
 	export default Header;
-
-snippet r:reducer React
+snippet :r.reducer React
 	export default function ${1:MyReducer}(state = [], action) {
 		switch (action.type) {
 			case ${2:MY_ACTION}:
@@ -1063,3 +1055,19 @@ snippet r:reducer React
 				return state;
 		}
 	}
+snippet :r.proptypes React
+	${1:MyComponent}.propTypes = {
+		${2:className}: ${3:PropTypes.string}
+	};
+snippet :r.prop.str
+	React.PropTypes.string
+snippet :r.prop.str.req
+	React.PropTypes.string.isRequired
+snippet :r.prop.func
+	React.PropTypes.func
+snippet :r.prop.func.req
+	React.PropTypes.func.isRequired
+snippet :r.prop.obj
+	React.PropTypes.object
+snippet :r.prop.obj.req
+	React.PropTypes.object.isRequired
