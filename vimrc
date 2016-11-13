@@ -740,15 +740,32 @@ endif
 "| Use <,j> to fix files.
 "| Autofix javascript files based on jscs
 "|
+"| NOTE: As jscs has merged with eslint, we can retire JscsFix.
+"|
 "/ {{{
 
-function! JscsFix()
+" function! JscsFix()
+" 	let l:winview = winsaveview()
+" 	% ! jscs -x
+" 	call winrestview(l:winview)
+" endfunction
+" command! JscsFix :call JscsFix()
+" noremap <leader>j :JscsFix<CR>
+
+function! ESLintFix()
+    let g:eslintfix_tmp_file = fnameescape(tempname().".js")
 	let l:winview = winsaveview()
-	% ! jscs -x
+    let content = getline("1", "$")
+    call writefile(content, g:eslintfix_tmp_file)
+    call system("eslint --config ${ESLINTRC} --fix " . g:eslintfix_tmp_file)
+    let result = readfile(g:eslintfix_tmp_file)
+    silent exec "1,$j"
+    call setline("1", result[0])
+    call append("1", result[1:])
 	call winrestview(l:winview)
 endfunction
-command! JscsFix :call JscsFix()
-noremap <leader>j :JscsFix<CR>
+command! ESLintFix :call ESLintFix()
+noremap <leader>j :ESLintFix<CR>
 
 "}}}
 
@@ -1348,12 +1365,12 @@ autocmd! BufWritePost * Neomake
 
 let g:neomake_html_enabled_makers = []
 let g:neomake_javascript_enabled_makers = ['eslint']
-" let g:neomake_javascript_eslint_exe = '/Users/josue/node_modules/.bin/eslint'
-" let g:neomake_javascript_eslint_maker = {
-" 	\ 'args': ['--no-color', '--format', 'compact'],
-" 	\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-" 	\ '%W%f: line %l\, col %c\, Warning - %m'
-" 	\ }
+let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
+let g:neomake_javascript_eslint_maker = {
+	\ 'args': ['--no-color', '--config', 'ESLINTRC', '--format', 'compact'],
+	\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+	\ '%W%f: line %l\, col %c\, Warning - %m'
+	\ }
 
 "'args': ['--no-color', '--format', 'compact', '--config', '/Users/josue/.eslintrc.js']
 "}}}
