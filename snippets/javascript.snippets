@@ -2,7 +2,7 @@ snippet #c
 	// ------------------------------------------------------
 	// ${0}
 snippet :cl
-	console.log('${1} => ', $1);
+	console.log('${1} => ', JSON.stringify($1, null, 4));
 snippet :clo
 	console.log('${1} => ', JSON.stringify($1, null, 4));
 
