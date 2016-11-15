@@ -757,7 +757,7 @@ function! ESLintFix()
 	let l:winview = winsaveview()
     let content = getline("1", "$")
     call writefile(content, g:eslintfix_tmp_file)
-    call system("eslint --config ${ESLINTRC} --fix " . g:eslintfix_tmp_file)
+    call system("eslint --config $ESLINTRC --fix " . g:eslintfix_tmp_file)
     let result = readfile(g:eslintfix_tmp_file)
     silent exec "1,$j"
     call setline("1", result[0])
@@ -825,6 +825,7 @@ autocmd FileType vim setlocal foldmethod=marker
 autocmd FileType vim setlocal foldlevel=0
 
 autocmd FileType html setlocal fdl=99
+autocmd FileType json setlocal fdl=99
 autocmd FileType javascript,html,css,scss,typescript,php setlocal foldlevel=0
 autocmd FileType javascript,typescript,css,scss,json,php setlocal foldmethod=marker
 autocmd FileType javascript,typescript,css,scss,json,php setlocal foldmarker={,}
@@ -1367,7 +1368,7 @@ let g:neomake_html_enabled_makers = []
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_eslint_maker = {
-	\ 'args': ['--no-color', '--config', 'ESLINTRC', '--format', 'compact'],
+	\ 'args': ['--no-color', '--config', $ESLINTRC, '--format', 'compact'],
 	\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
 	\ '%W%f: line %l\, col %c\, Warning - %m'
 	\ }
