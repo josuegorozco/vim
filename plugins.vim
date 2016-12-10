@@ -374,6 +374,22 @@ call dein#add('tomtom/tcomment_vim')
 
 "/
 "|--------------------------------------------------------------------------
+"| Auto correct css/scss style erorrs
+"|--------------------------------------------------------------------------
+"|
+"| vim-stylefmt
+"| https://github.com/kewah/vim-stylefmt
+"|
+"| Format your stylesheets using stylefmt inside Vim. Stylefmt supports the
+"| latest CSS syntax and understands CSS-like syntax such as SCSS, Stylus
+"| and Less.
+"|
+"/
+
+call dein#add('kewah/vim-stylefmt')
+
+"/
+"|--------------------------------------------------------------------------
 "| Preview css colors in code
 "|--------------------------------------------------------------------------
 "|

@@ -446,24 +446,24 @@ hi StatusLine ctermfg=darkgray ctermbg=black
 "/ {{{
 
 if has("gui_running")
-	if has("gui_mac") || has("gui_macvim")
-		set guifont=Fira_Code:h12
-		set transparency=7
-	endif
+    if has("gui_mac") || has("gui_macvim")
+        set guifont=Fira_Code:h12
+        set transparency=7
+    endif
 else
-	let g:CSApprox_loaded = 1
+    let g:CSApprox_loaded = 1
 
-	if $COLORTERM == 'gnome-terminal'
-		set term=gnome-256color
-	else
-		if $TERM == 'xterm'
-			set term=xterm-256color
-		endif
-	endif
+    if $COLORTERM == 'gnome-terminal'
+        set term=gnome-256color
+    else
+        if $TERM == 'xterm'
+            set term=xterm-256color
+        endif
+    endif
 endif
 
 if &term =~ '256color'
-	set t_ut=
+    set t_ut=
 endif
 
 "}}}
@@ -570,7 +570,7 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 "/ {{{
 
 if exists("*fugitive#statusline")
-	set statusline+=%{fugitive#statusline()}
+    set statusline+=%{fugitive#statusline()}
 endif
 
 "}}}
@@ -685,13 +685,13 @@ endif
 "/ {{{
 
 augroup autosourcing
-	autocmd!
-	autocmd BufWritePost ~/.vimrc source %
+    autocmd!
+    autocmd BufWritePost ~/.vimrc source %
 augroup END
 
 augroup autosourcing
-	autocmd!
-	autocmd BufWritePost ~/.vim/init.vim source %
+    autocmd!
+    autocmd BufWritePost ~/.vim/init.vim source %
 augroup END
 
 "}}}
@@ -723,11 +723,11 @@ augroup END
 "/ {{{
 
 if !exists('*s:setupWrapping')
-	function s:setupWrapping()
-		set wrap
-		set wm=2
-		set textwidth=99
-	endfunction
+    function s:setupWrapping()
+        set wrap
+        set wm=2
+        set textwidth=99
+    endfunction
 endif
 
 "}}}
@@ -752,9 +752,13 @@ endif
 " command! JscsFix :call JscsFix()
 " noremap <leader>j :JscsFix<CR>
 
+function! SingleQuotes() range
+  execute "silent! %s/\"/'/g"
+endfunction
+
 function! ESLintFix()
     let g:eslintfix_tmp_file = fnameescape(tempname().".js")
-	let l:winview = winsaveview()
+    let l:winview = winsaveview()
     let content = getline("1", "$")
     call writefile(content, g:eslintfix_tmp_file)
     call system("eslint --config $ESLINTRC --fix " . g:eslintfix_tmp_file)
@@ -762,10 +766,26 @@ function! ESLintFix()
     silent exec "1,$j"
     call setline("1", result[0])
     call append("1", result[1:])
-	call winrestview(l:winview)
+    call winrestview(l:winview)
 endfunction
 command! ESLintFix :call ESLintFix()
 noremap <leader>j :ESLintFix<CR>
+
+function! SCSSLintFix()
+    let g:scsslintfix_tmp_file = fnameescape(tempname().".scss")
+    let l:winview = winsaveview()
+    let content = getline("1", "$")
+    call writefile(content, g:scsslintfix_tmp_file)
+    call system("stylefmt --config $STYLELINTRC " . g:scsslintfix_tmp_file . " " . g:scsslintfix_tmp_file)
+    let result = readfile(g:scsslintfix_tmp_file)
+    silent exec "1,$j"
+    call setline("1", result[0])
+    call append("1", result[1:])
+    call winrestview(l:winview)
+    call SingleQuotes()
+endfunction
+command! SCSSLintFix :call SCSSLintFix()
+autocm FileType scss map <buffer> <leader>j :call SCSSLintFix()<CR>
 
 "}}}
 
@@ -780,19 +800,19 @@ noremap <leader>j :ESLintFix<CR>
 "/ {{{
 
 function! MyFoldText()
-	let line = getline(v:foldstart)
+    let line = getline(v:foldstart)
 
-	let nucolwidth = &fdc + &number * &numberwidth
-	let windowwidth = winwidth(0) - nucolwidth - 3
-	let foldedlinecount = v:foldend - v:foldstart
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
 
-	" expand tabs into spaces
-	let onetab = strpart('			', 0, &tabstop)
-	let line = substitute(line, '\t', onetab, 'g')
+    " expand tabs into spaces
+    let onetab = strpart('			', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
 
-	let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-	let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-	return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . '…' . ' '
 endfunction
 
 "}}}
@@ -807,10 +827,10 @@ endfunction
 "/ {{{
 
 function! JavaScriptFold()
-	" syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-	setlocal foldmethod=syntax
-	setlocal foldlevel=1
-	syn region foldBraces start=/{/ skip=/\(\/\/.*\)\|\(\/.*\/\)/ end=/}/ transparent fold keepend extend
+    " syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+    setlocal foldmethod=syntax
+    setlocal foldlevel=1
+    syn region foldBraces start=/{/ skip=/\(\/\/.*\)\|\(\/.*\/\)/ end=/}/ transparent fold keepend extend
 endfunction
 
 set foldtext=MyFoldText()
@@ -902,8 +922,8 @@ autocmd InsertLeave * set noautochdir | execute 'cd' fnameescape(save_cwd)
 "/ {{{
 
 augroup vimrc-sync-fromstart
-	autocmd!
-	autocmd BufEnter * :syntax sync fromstart
+    autocmd!
+    autocmd BufEnter * :syntax sync fromstart
 augroup END
 
 "}}}
@@ -918,8 +938,8 @@ augroup END
 "/ {{{
 
 augroup vimrc-remember-cursor-position
-	autocmd!
-	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 "}}}
@@ -934,8 +954,8 @@ augroup END
 "/ {{{
 
 augroup vimrc-wrapping
-	autocmd!
-	autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
+    autocmd!
+    autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 augroup END
 
 "}}}
@@ -950,9 +970,9 @@ augroup END
 "/ {{{
 
 augroup vimrc-make-cmake
-	autocmd!
-	autocmd FileType make setlocal noexpandtab
-	autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+    autocmd!
+    autocmd FileType make setlocal noexpandtab
+    autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
 
 "}}}
@@ -967,9 +987,9 @@ augroup END
 "/ {{{
 
 function! s:PlaceholderImgTag(size)
-	let url = 'http://dummyimage.com/' . a:size . '/000000/555555'
-	let [width,height] = split(a:size, 'x')
-	execute "normal a<img src=\"".url."\" width=\"".width."\" height=\"".height."\" />"
+    let url = 'http://dummyimage.com/' . a:size . '/000000/555555'
+    let [width,height] = split(a:size, 'x')
+    execute "normal a<img src=\"".url."\" width=\"".width."\" height=\"".height."\" />"
 endfunction
 command! -nargs=1 PlaceholderImgTag call s:PlaceholderImgTag(<f-args>)
 nmap <Leader>img :PlaceholderImgTag<cr>
@@ -1368,19 +1388,19 @@ let g:neomake_html_enabled_makers = []
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_javascript_eslint_exe = system('PATH=$(npm bin):$PATH && which eslint | tr -d "\n"')
 let g:neomake_javascript_eslint_maker = {
-	\ 'args': ['--no-color', '--config', $ESLINTRC, '--format', 'compact'],
-	\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-	\ '%W%f: line %l\, col %c\, Warning - %m'
-	\ }
+    \ 'args': ['--no-color', '--config', $ESLINTRC, '--format', 'compact'],
+    \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+    \ '%W%f: line %l\, col %c\, Warning - %m'
+    \ }
 
 let g:neomake_scss_enabled_markers = ['stylelint']
 let g:neomake_scss_stylelint_exe = system('PATH=$(npm bin):$PATH && which stylelint | tr -d "\n"')
 let g:neomake_scss_stylelint_maker = {
-	\ 'args': ['--no-color', '--syntax', 'scss', '--format', 'compact'],
-	\ 'errorformat': '%+P%f,' .
-	\ '%*\s%l:%c  %t  %m,' .
-	\ '%-Q'
-	\ }
+    \ 'args': ['--no-color', '--config', $STYLELINTRC, '--syntax', 'scss', '--format', 'compact'],
+    \ 'errorformat': '%+P%f,' .
+    \ '%*\s%l:%c  %t  %m,' .
+    \ '%-Q'
+    \ }
 
 "'args': ['--no-color', '--format', 'compact', '--config', '/Users/josue/.eslintrc.js']
 "}}}
@@ -1481,7 +1501,7 @@ inoremap alt=   alt=""<Left>
 inoremap align=   align=""<Left>
 inoremap style=   style=""<Left>
 inoremap class=   class=""<Left>
-inoremap className=   className=""<Left>
+inoremap className=   className={}<Left>
 inoremap value=   value=""<Left>
 inoremap src=   src=""<Left>
 inoremap border=   border=""<Left>
@@ -1510,7 +1530,7 @@ inoremap <i>   <i></i><Left><Left><Left><Left>
 "/ {{{
 
 if has('unnamedplus')
-	set clipboard=unnamed,unnamedplus
+    set clipboard=unnamed,unnamedplus
 endif
 
 noremap YY "+y<CR>
@@ -1518,9 +1538,9 @@ noremap P "+gP<CR>
 noremap XX "+x<CR>
 
 if has('macunix')
-	" pbcopy for OSX copy/paste
-	vmap <C-x> :!pbcopy<CR>
-	vmap <C-c> :w !pbcopy<CR><CR>
+    " pbcopy for OSX copy/paste
+    vmap <C-x> :!pbcopy<CR>
+    vmap <C-c> :w !pbcopy<CR><CR>
 endif
 
 "}}}
@@ -1621,7 +1641,7 @@ let g:jsx_ext_required = 0
 "/ {{{
 
 if filereadable(expand("~/.nvimrc.local"))
-	source ~/.nvimrc.local
+    source ~/.nvimrc.local
 endif
 
 "}}}
