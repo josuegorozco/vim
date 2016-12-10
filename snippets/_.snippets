@@ -1022,12 +1022,17 @@ snippet :r.component React
 	export default $1
 snippet :r.stateless React
 	import React from 'react';
+	import classNames from 'classnames';
 
-	const ${1:MyComponent} = () => (
-		<div>
-			${2:...}
+	const ${1:MyComponent} = props => (
+		<div className={classNames('some-class')}>
+			${2:{props.children}}
 		</div>
 	);
+
+	$1.propTypes = {
+		children: React.PropTypes.node
+	};
 
 	export default $1;
 snippet :r.header React
@@ -1071,3 +1076,11 @@ snippet :r.prop.obj
 	React.PropTypes.object
 snippet :r.prop.obj.req
 	React.PropTypes.object.isRequired
+snippet :r.sysimport
+	System.import('containers/${1:My}Container/reducer'),
+	System.import('containers/$1Container/sagas'),
+snippet :r.inject
+	injectReducer('${1:My}Container', $1Reducer.default);
+	injectSagas('$1Container', $1Sagas.default);
+snippet assert.m
+	assert.match(${1:actual}, ${2:expectation});
