@@ -1023,15 +1023,25 @@ snippet :r.component React
 snippet :r.stateless React
 	import React from 'react';
 	import classNames from 'classnames';
+	import styles from './styles.scss';
+
+	/*
+	|--------------------------------------------------------------------------
+	| $1
+	|--------------------------------------------------------------------------
+	|
+	| Stateless component
+	|
+	*/
 
 	const ${1:MyComponent} = props => (
-		<div className={classNames('some-class')}>
+		<div className={classNames(styles.$1)}>
 			${2:{props.children}}
 		</div>
 	);
 
 	$1.propTypes = {
-		children: React.PropTypes.node
+		children: React.PropTypes.node,
 	};
 
 	export default $1;
