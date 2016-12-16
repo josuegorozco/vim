@@ -1070,26 +1070,38 @@ snippet :r.reducer React
 				return state;
 		}
 	}
-snippet :r.proptypes React
+snippet newproptypes React
 	${1:MyComponent}.propTypes = {
 		${2:className}: ${3:PropTypes.string}
 	};
-snippet :r.prop.str
-	React.PropTypes.string
-snippet :r.prop.str.req
-	React.PropTypes.string.isRequired
-snippet :r.prop.func
-	React.PropTypes.func
-snippet :r.prop.func.req
-	React.PropTypes.func.isRequired
-snippet :r.prop.obj
-	React.PropTypes.object
-snippet :r.prop.obj.req
-	React.PropTypes.object.isRequired
-snippet :r.sysimport
+snippet propstring
+	React.PropTypes.string.isRequired,
+snippet propnum
+	React.PropTypes.number.isRequired,
+snippet propfunc
+	React.PropTypes.func.isRequired,
+snippet propobject
+	React.PropTypes.object.isRequired,
+snippet propbool
+	React.PropTypes.object.isRequired,
+snippet propany
+	React.PropTypes.object.isRequired,
+snippet propnode
+	React.PropTypes.node,
+snippet propelement
+	React.PropTypes.element,
+snippet proparray
+	React.PropTypes.array,
+snippet proparrayof
+	React.PropTypes.arrayOf(
+		React.PropTypes.shape({
+			${1:prop}: ${2:React.PropTypes.string.isRequired},
+		})
+	),
+snippet sysimport
 	System.import('containers/${1:My}Container/reducer'),
 	System.import('containers/$1Container/sagas'),
-snippet :r.inject
+snippet inject
 	injectReducer('${1:My}Container', $1Reducer.default);
 	injectSagas('$1Container', $1Sagas.default);
 snippet assert.m
