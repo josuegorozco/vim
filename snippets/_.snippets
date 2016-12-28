@@ -951,7 +951,17 @@ snippet :jumbo Bootstrap
 			<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 		</p>
 	</div>
-
+snippet :media
+	<div class="media">
+		<div class="media-left">
+		<a href="#">
+			<img class="media-object" src="${1:...}" alt="" />
+		</a>
+		</div>
+		<div class="media-body">
+			${2:...}
+		</div>
+	</div>
 snippet :r.main React
 	import 'babel-polyfill';
 	import React from 'react';
@@ -1009,7 +1019,7 @@ snippet :r.link React
 snippet :r.component React
 	import React from 'react';
 
-	class ${1:MyComponent} extends React.Component {
+	class ${1:MyComponent} extends React.Component { // eslint-disable-line react/prefer-stateless-function
 		render () {
 			return (
 				<div>
@@ -1019,7 +1029,7 @@ snippet :r.component React
 		}
 	}
 
-	export default $1
+	export default $1;
 snippet :r.stateless React
 	import React from 'react';
 	import classNames from 'classnames';
@@ -1074,30 +1084,34 @@ snippet newproptypes React
 	${1:MyComponent}.propTypes = {
 		${2:className}: ${3:PropTypes.string}
 	};
-snippet propstring
+snippet pstr
 	React.PropTypes.string.isRequired,
-snippet propnum
+snippet pnum
 	React.PropTypes.number.isRequired,
-snippet propfunc
+snippet pfunc
 	React.PropTypes.func.isRequired,
-snippet propobject
+snippet pobject
 	React.PropTypes.object.isRequired,
-snippet propbool
+snippet pbool
 	React.PropTypes.object.isRequired,
-snippet propany
+snippet pany
 	React.PropTypes.object.isRequired,
-snippet propnode
+snippet pnode
 	React.PropTypes.node,
-snippet propelement
+snippet pel
 	React.PropTypes.element,
-snippet proparray
+snippet parray
 	React.PropTypes.array,
-snippet proparrayof
+snippet parrayof
 	React.PropTypes.arrayOf(
 		React.PropTypes.shape({
 			${1:prop}: ${2:React.PropTypes.string.isRequired},
 		})
 	),
+snippet pshape
+	React.PropTypes.shape({
+		${1:prop}: ${2:React.PropTypes.string.isRequired},
+	})
 snippet sysimport
 	System.import('containers/${1:My}Container/reducer'),
 	System.import('containers/$1Container/sagas'),
@@ -1106,3 +1120,51 @@ snippet inject
 	injectSagas('$1Container', $1Sagas.default);
 snippet assert.m
 	assert.match(${1:actual}, ${2:expectation});
+snippet newsagas
+	// Dont forget to UPPERCASE / lowercase ${1:Resource} where required.
+	import { call, put } from 'redux-saga/effects';
+	import { takeLatest } from 'redux-saga';
+	import { REQUEST_$1 } from './constants';
+	import { request$1Succeeded, request$1Failed } from './actions';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Individual exports for testing
+	|--------------------------------------------------------------------------
+	|
+	| Default saga
+	|
+	*/
+
+	export function fetch$1FromServer() {
+		return fetch('http://localhost:3001/$1')
+			.then(response => response.json());
+	}
+
+	export function* fetch$1() {
+		try {
+			const $1 = yield call(fetch$1FromServer);
+			yield put(request$1Succeeded($1));
+		} catch (e) {
+			yield put(request$1Failed(e.message));
+		}
+	}
+
+	export function* fetch$1Saga() {
+		yield* takeLatest(REQUEST_$1, fetch$1);
+	}
+
+	/*
+	|--------------------------------------------------------------------------
+	| Export default
+	|--------------------------------------------------------------------------
+	|
+	| All sagas to be loaded
+	|
+	*/
+
+	export default [
+		fetch$1Saga,
+	];
+snippet cnames
+	import classNames from 'classnames';
