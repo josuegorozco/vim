@@ -1196,7 +1196,7 @@ so ~/.vim/lightline-plugin.vim
 "/ {{{
 
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,*/tmp/*,*.so,*.swp,*.zip,*/node_modules,*/vendor,*/storage
+set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,*/tmp/*,*.so,*.swp,*.zip,*/node_modules,*/vendor,*/storage,*/dist,*/coverage
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|tox)$'
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
 let g:ctrlp_use_caching = 0
