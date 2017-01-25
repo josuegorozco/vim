@@ -494,7 +494,7 @@ snippet :btn.dropdown Bootstrap
 		</ul>
 	</div>
 
-snippet :inpt.grp Bootstrap
+snippet :input-group Bootstrap
 	<div class="input-group">
 		<span class="input-group-addon">${1:$}</span>
 		<input type="text" class="form-control" aria-label="${2:Amount (to the nearest dollar)}">
@@ -1122,10 +1122,10 @@ snippet assert.m
 	assert.match(${1:actual}, ${2:expectation});
 snippet newsagas
 	// Dont forget to UPPERCASE / lowercase ${1:Resource} where required.
-	import { call, put } from 'redux-saga/effects';
-	import { takeLatest } from 'redux-saga';
+	import { call, put, takeLatest } from 'redux-saga/effects';
 	import { REQUEST_$1 } from './constants';
 	import { request$1Succeeded, request$1Failed } from './actions';
+	import config from '../../../config';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1137,21 +1137,30 @@ snippet newsagas
 	*/
 
 	export function fetch$1FromServer() {
-		return fetch('http://localhost:3001/$1')
+		const url = config.api.url.$1;
+		const options = config.api.fetchOptions;
+
+		return fetch(url, options)
 			.then(response => response.json());
 	}
 
 	export function* fetch$1() {
 		try {
-			const $1 = yield call(fetch$1FromServer);
-			yield put(request$1Succeeded($1));
+			const results = yield call(fetch$1FromServer);
+
+			if (!results.success) {
+				yield put(request$1Failed(results.error.message));
+				return;
+			}
+
+			yield put(request$1Succeeded(results.data));
 		} catch (e) {
 			yield put(request$1Failed(e.message));
 		}
 	}
 
 	export function* fetch$1Saga() {
-		yield* takeLatest(REQUEST_$1, fetch$1);
+		yield takeLatest(REQUEST_$1, fetch$1);
 	}
 
 	/*
