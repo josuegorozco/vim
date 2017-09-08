@@ -1,3 +1,70 @@
 snippet #c
 	//------------------------------------------------------
 	// ${0}
+snippet :factory
+	$factory->define(App\${1}::class, function (Faker\Generator $faker) {
+		return [
+			'${2}' => $faker${3},
+		];
+	});
+snippet :withValidator
+	/**
+	 * withValidator
+	 *
+	 * Customize post validation and add errors, if required.
+	 *
+	 * Example:
+	 *
+	 * if (!$this->entity) {
+	 *     $validator->errors()->add('entity', 'Not found');
+	 * }
+	 *
+	 * @param mixed $validator
+	 */
+	public function withValidator($validator)
+	{
+		$validator->after(function($validator) {
+			$this->${1:entity} = $this->client('${2:ais}')
+				->get('$1', ['entity_id' => request()->route('$1')])
+				->transform(new $1Response)
+				->first();
+		});
+	}
+snippet :responseClass
+	<?php
+
+	namespace App\Api\Messages;
+
+	use App\Traits\Objectable;
+	use App\Traits\Transformable;
+
+	class ${1:My}Response {
+		use Transformable, Objectable;
+
+		/**
+		 * fields
+		 *
+		 * @var mixed
+		 */
+		protected $fields = [
+			'id',
+		];
+
+		/**
+		 * transform
+		 *
+		 * @param mixed $item
+		 */
+		public function transform($item)
+		{
+			try {
+				$data = array_merge([], array_only($item, $this->fields), [
+					//
+				]);
+
+				return $data;
+			} catch (\Exception $e) {
+				return null;
+			}
+		}
+	}

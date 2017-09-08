@@ -1020,7 +1020,7 @@ snippet :r.component React
 	import React from 'react';
 
 	class ${1:MyComponent} extends React.Component { // eslint-disable-line react/prefer-stateless-function
-		render () {
+		render() {
 			return (
 				<div>
 					${2:...}
@@ -1030,6 +1030,72 @@ snippet :r.component React
 	}
 
 	export default $1;
+snippet :r.actions React
+	export function ${1:defaultAction}() {
+		return {
+			type: ${2:DEFAULT_ACTION},
+		};
+	}
+
+	export function $1Succeeded() {
+		return {
+			type: $2_SUCCEEDED,
+		};
+	}
+
+	export function $1Failed(message) {
+		return {
+			type: $2_FAILED,
+			message,
+		};
+	}
+snippet :r.sagas React
+	export function ${1:fetchDefault}FromServer() {
+		const url = config.api.url.$1;
+		const options = config.api.fetchOptions;
+
+		return fetch(url, options)
+			.then(response => response.json());
+	}
+
+	export function* $1() {
+		try {
+			const results = yield call($1FromServer);
+
+			if (!results.success) {
+				yield put($1Failed(results.error.message));
+				return;
+			}
+
+			yield put($1Succeeded(results.data));
+		} catch (e) {
+			yield put($1Failed(e.message));
+		}
+	}
+
+	export function* $1Saga() {
+		yield takeLatest(${2:DEFAULT_ACTION}, $1);
+	}
+snippet :requiredProps React
+	let requiredProps;
+
+	/**
+	 * resetRequiredProps
+	 *
+	 * @returns {void}
+	 */
+	function resetRequiredProps() {
+		requiredProps = {
+			loading: false,
+		};
+	}
+
+	/**
+	 * beforeEach
+	 *
+	 * @returns {void}
+	 */
+	beforeEach(() => resetRequiredProps());
 snippet :r.stateless React
 	import React from 'react';
 	import classNames from 'classnames';
@@ -1085,36 +1151,40 @@ snippet newproptypes React
 		${2:className}: ${3:PropTypes.string}
 	};
 snippet pstr
-	React.PropTypes.string.isRequired,
+	PropTypes.string.isRequired,
 snippet pnum
-	React.PropTypes.number.isRequired,
+	PropTypes.number.isRequired,
 snippet pfunc
-	React.PropTypes.func.isRequired,
+	PropTypes.func.isRequired,
 snippet pobject
-	React.PropTypes.object.isRequired,
+	PropTypes.object.isRequired,
 snippet pbool
-	React.PropTypes.object.isRequired,
+	PropTypes.bool.isRequired,
 snippet pany
-	React.PropTypes.object.isRequired,
+	PropTypes.object.isRequired,
 snippet pnode
-	React.PropTypes.node,
+	PropTypes.node,
 snippet pel
-	React.PropTypes.element,
+	PropTypes.element,
 snippet parray
-	React.PropTypes.array,
+	PropTypes.array,
 snippet parrayof
-	React.PropTypes.arrayOf(
-		React.PropTypes.shape({
-			${1:prop}: ${2:React.PropTypes.string.isRequired},
+	PropTypes.arrayOf(
+		PropTypes.shape({
+			${1:prop}: ${2:PropTypes.string.isRequired},
 		})
 	),
 snippet pshape
-	React.PropTypes.shape({
-		${1:prop}: ${2:React.PropTypes.string.isRequired},
+	PropTypes.shape({
+		${1:prop}: ${2:PropTypes.string.isRequired},
 	})
+snippet poneof
+	PropTypes.oneOfType([
+		PropTypes.string.isRequired,
+	]),
 snippet sysimport
-	System.import('containers/${1:My}Container/reducer'),
-	System.import('containers/$1Container/sagas'),
+	import('containers/${1:My}Container/reducer'),
+	import('containers/$1Container/sagas'),
 snippet inject
 	injectReducer('${1:My}Container', $1Reducer.default);
 	injectSagas('$1Container', $1Sagas.default);
@@ -1177,3 +1247,7 @@ snippet newsagas
 	];
 snippet cnames
 	import classNames from 'classnames';
+snippet styled
+	import styled from 'styled-components';
+snippet ptypes
+	import PropTypes from 'prop-types';

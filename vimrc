@@ -1076,10 +1076,26 @@ noremap <Leader>v :<C-u>vsplit<CR>
 "|
 "/ {{{
 
-nmap <C-J> <C-W><C-J>
-nmap <C-K> <C-W><C-K>
-nmap <C-H> <C-W><C-H>
-nmap <C-L> <C-W><C-L>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+"}}}
+
+"/
+"|--------------------------------------------------------------------------
+"| Mappings:
+"|--------------------------------------------------------------------------
+"|
+"| Make it easier to switch between splits
+"|
+"/ {{{
+
+nnoremap <silent><Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent><Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent><Leader>> :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent><Leader>< :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 "}}}
 
@@ -1199,13 +1215,18 @@ set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,*/tmp/*,*.so,*.swp,*.zip,*/node_modules,*/vendor,*/storage,*/dist,*/coverage
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|tox)$'
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-let g:ctrlp_use_caching = 0
+" let g:ctrlp_use_caching = 0
+let g:ctrlp_cache_dir = '~/.cache/ctrlp'
 let g:ctrlp_working_path_mode = 'rwa'
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 noremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map = '<leader>1'
 let g:ctrlp_open_new_file = 'r'
+
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g | grep -Ev "'+ g:ctrlp_custom_ignore +'"'
+endif
 
 "}}}
 
@@ -1343,7 +1364,7 @@ let g:snips_email='jorozco@surgeforward.com'
 "|
 "/ {{{
 
-let g:pdv_template_dir = $HOME . '/.vim/pdv/templates_snip'
+let g:pdv_template_dir = $HOME . '/.vim/repos/github.com/tobyS/pdv/templates_snip'
 autocm FileType php map <buffer> <leader>d :call pdv#DocumentWithSnip()<CR>
 
 "}}}
@@ -1415,7 +1436,7 @@ let g:neomake_scss_stylelint_maker = {
 "|
 "/ {{{
 
-nmap <silent> <C-l> ?function<cr>:noh<cr><Plug>(jsdoc)
+"nmap <silent> <C-l> ?function<cr>:noh<cr><Plug>(jsdoc)
 nmap <Leader>d :noh<cr><Plug>(jsdoc)
 
 "}}}

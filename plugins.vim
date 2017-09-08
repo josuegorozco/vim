@@ -170,6 +170,7 @@ call dein#add('vim-scripts/HTML-AutoCloseTag')
 call dein#add('gorodinskiy/vim-coloresque')
 call dein#add('arnaud-lb/vim-php-namespace')
 call dein#add('Yggdroot/indentLine')
+call dein#add('tbrisbout/vim-babeljs')
 
 "/
 "|--------------------------------------------------------------------------
