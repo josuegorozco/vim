@@ -1215,7 +1215,6 @@ set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__,*/tmp/*,*.so,*.swp,*.zip,*/node_modules,*/vendor,*/storage,*/dist,*/coverage
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|tox)$'
 let g:ctrlp_user_command = "find %s -type f | grep -Ev '"+ g:ctrlp_custom_ignore +"'"
-" let g:ctrlp_use_caching = 0
 let g:ctrlp_cache_dir = '~/.cache/ctrlp'
 let g:ctrlp_working_path_mode = 'rwa'
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:30,results:30'
@@ -1227,7 +1226,6 @@ let g:ctrlp_open_new_file = 'r'
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g | grep -Ev "'+ g:ctrlp_custom_ignore +'"'
 endif
-
 "}}}
 
 "/
