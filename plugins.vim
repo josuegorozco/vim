@@ -112,6 +112,7 @@ call dein#add('Shougo/dein.vim')
 "/ {{{
 
 call dein#add('scrooloose/nerdtree')
+call dein#add('tpope/vim-dispatch')
 call dein#add('tpope/vim-commentary')
 call dein#add('tpope/vim-markdown', {'on_ft': 'markdown'})
 call dein#add('ctrlpvim/ctrlp.vim')
@@ -267,6 +268,18 @@ call dein#add('heavenshell/vim-jsdoc')
 "/
 
 call dein#add('mxw/vim-jsx')
+
+
+"/
+"|--------------------------------------------------------------------------
+"| Jest Testing
+"|--------------------------------------------------------------------------
+"|
+"| See https://github.com/janko-m/vim-test
+"|
+"/
+
+call dein#add('janko-m/vim-test')
 
 "/
 "|--------------------------------------------------------------------------

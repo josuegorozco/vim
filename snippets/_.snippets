@@ -1030,6 +1030,12 @@ snippet :r.component React
 	}
 
 	export default $1;
+snippet :ignore
+	/* istanbul ignore next */
+snippet :r.constants React
+	export const ${1:DEFAULT_ACTION} = 'app/`expand('%:p:h:t')`/$1'
+	export const $1_SUCCEEDED = 'app/`expand('%:p:h:t')`/$1_SUCCEEDED';
+	export const $1_FAILED = 'app/`expand('%:p:h:t')`/$1_FAILED';
 snippet :r.actions React
 	export function ${1:defaultAction}() {
 		return {
