@@ -1032,10 +1032,18 @@ snippet :r.component React
 	export default $1;
 snippet :ignore
 	/* istanbul ignore next */
+snippet :r.constants.import React
+	${1:DEFAULT_ACTION},
+	$1_SUCCEEDED,
+	$1_FAILED,
 snippet :r.constants React
 	export const ${1:DEFAULT_ACTION} = 'app/`expand('%:p:h:t')`/$1'
 	export const $1_SUCCEEDED = 'app/`expand('%:p:h:t')`/$1_SUCCEEDED';
 	export const $1_FAILED = 'app/`expand('%:p:h:t')`/$1_FAILED';
+snippet :r.actions.import React
+	${1:defaultAction},
+	$1Succeeded,
+	$1Failed,
 snippet :r.actions React
 	export function ${1:defaultAction}() {
 		return {
@@ -1055,6 +1063,56 @@ snippet :r.actions React
 			message,
 		};
 	}
+snippet :r.actions.test
+	describe('${1:defaultAction}', () => {
+		it('has a type of ${2:DEFAULT_ACTION}', () => {
+			// ------------------------------------------------------
+			// Given: a default action/event is triggered.
+			const event = { type: $2 };
+
+			// ------------------------------------------------------
+			// When: a user performs X.
+			const results = $1();
+
+			// ------------------------------------------------------
+			// Then: it should return the correct constant.
+			expect(results).toEqual(event);
+		});
+
+		it('has a type of $2_SUCCEEDED', () => {
+			// ------------------------------------------------------
+			// Given: a default action/event is triggered.
+			const def = true;
+			const event = { type: $2_SUCCEEDED, def };
+
+			// ------------------------------------------------------
+			// When: a user performs X.
+			const results = $1Succeeded(def);
+
+			// ------------------------------------------------------
+			// Then: it should return the correct constant.
+			expect(results).toEqual(event);
+		});
+
+		it('has a type of $2_FAILED', () => {
+			// ------------------------------------------------------
+			// Given: a default action/event is triggered.
+			const message = 'Some error';
+			const event = { type: $2_FAILED, message };
+
+			// ------------------------------------------------------
+			// When: a user performs X.
+			const results = $1Failed(message);
+
+			// ------------------------------------------------------
+			// Then: it should return the correct constant.
+			expect(results).toEqual(event);
+		});
+	});
+snippet :r.sagas.import React
+	${1:defaultAction},
+	$1Saga,
+	$1FromServer,
 snippet :r.sagas React
 	export function ${1:fetchDefault}FromServer() {
 		const url = config.api.url.$1;
@@ -1082,6 +1140,90 @@ snippet :r.sagas React
 	export function* $1Saga() {
 		yield takeLatest(${2:DEFAULT_ACTION}, $1);
 	}
+snippet :r.sagas.test
+	describe('${1:fetchDefaultAction}FromServer', () => {
+		it('should return array when fetching from server', () => {
+			// ------------------------------------------------------
+			// Given: i expect a response to equal true.
+			const response = fetch();
+
+			// ------------------------------------------------------
+			// When: the class is added to the dom element.
+			const results = $1FromServer();
+
+			// ------------------------------------------------------
+			// Then: the results should equal the response
+			expect(results).toEqual(response);
+		});
+	});
+
+	describe('$1()', () => {
+		const action = { type: ${3:DEFAULT_ACTION} };
+		let generator;
+
+		beforeEach(() => {
+			generator = $1(action);
+
+			expect(generator.next().value).toEqual(call($1FromServer));
+		});
+
+		it('should dispatch ${2:defaultAction}Succeeded action', () => {
+			// ------------------------------------------------------
+			// Given: we receive a response
+			const response = {
+				status: 200,
+				success: true,
+				data: [],
+			};
+			const putDescriptor = generator.next(response).value;
+
+			// ------------------------------------------------------
+			// When: default succeeded
+			const results = put($2Succeeded(response.data));
+
+			// ------------------------------------------------------
+			// Then: the correct actions should be called.
+			expect(putDescriptor).toEqual(results);
+		});
+
+		it('should dispatch $2Failed action, if api error', () => {
+			// ------------------------------------------------------
+			// Given: we receive a response
+			const response = {
+				status: 500,
+				success: false,
+				error: {
+					message: 'Some error',
+				},
+			};
+			const putDescriptor = generator.next(response).value;
+
+			// ------------------------------------------------------
+			// When: the nav is collapsed
+			const results = put($2Failed(response.error.message));
+
+			// ------------------------------------------------------
+			// Then: the correct actions should be called.
+			expect(putDescriptor).toEqual(results);
+		});
+
+		it('should call the $2Failed action, if errors', () => {
+			const response = new Error('Some error');
+			const putDescriptor = generator.throw(response).value;
+
+			expect(putDescriptor).toEqual(put($2Failed(response.message)));
+		});
+	});
+
+	describe('$1Saga()', () => {
+		const generator = $1Saga();
+
+		it('should watch for $3 action', () => {
+			const selectDescriptor = generator.next().value;
+
+			expect(selectDescriptor).toEqual(takeLatest($3, $1));
+		});
+	});
 snippet :requiredProps React
 	let requiredProps;
 
@@ -1257,5 +1399,3 @@ snippet cnames
 	import classNames from 'classnames';
 snippet styled
 	import styled from 'styled-components';
-snippet ptypes
-	import PropTypes from 'prop-types';
