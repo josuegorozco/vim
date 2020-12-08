@@ -1037,9 +1037,9 @@ snippet :r.constants.import React
 	$1_SUCCEEDED,
 	$1_FAILED,
 snippet :r.constants React
-	export const ${1:DEFAULT_ACTION} = 'app/`expand('%:p:h:t')`/$1'
-	export const $1_SUCCEEDED = 'app/`expand('%:p:h:t')`/$1_SUCCEEDED';
-	export const $1_FAILED = 'app/`expand('%:p:h:t')`/$1_FAILED';
+	export const ${1:DEFAULT_ACTION} = '`expand('%:p:h:t')`/$1';
+	export const $1_SUCCEEDED = '`expand('%:p:h:t')`/$1_SUCCEEDED';
+	export const $1_FAILED = '`expand('%:p:h:t')`/$1_FAILED';
 snippet :r.actions.import React
 	${1:defaultAction},
 	$1Succeeded,
@@ -1116,10 +1116,9 @@ snippet :r.sagas.import React
 snippet :r.sagas React
 	export function ${1:fetchDefault}FromServer() {
 		const url = config.api.url.$1;
-		const options = config.api.fetchOptions;
+		const options = config.api.fetchOptionsWithAuth({});
 
-		return fetch(url, options)
-			.then(response => response.json());
+		return fetch(url, options).then(fetchResponse);
 	}
 
 	export function* $1() {
@@ -1340,47 +1339,56 @@ snippet inject
 	injectSagas('$1Container', $1Sagas.default);
 snippet assert.m
 	assert.match(${1:actual}, ${2:expectation});
-snippet newsagas
-	// Dont forget to UPPERCASE / lowercase ${1:Resource} where required.
-	import { call, put, takeLatest } from 'redux-saga/effects';
-	import { REQUEST_$1 } from './constants';
-	import { request$1Succeeded, request$1Failed } from './actions';
-	import config from '../../../config';
+snippet :r.sagas.new React
+	import {
+		all,
+		call,
+		put,
+		takeLatest,
+	} from 'redux-saga/effects';
+	import config from 'config';
+	import { fetchResponse } from 'utils/fetch';
+	import {
+		FETCH_${1:CONSTANT},
+	} from './constants';
+	import {
+		fetch${2:Action}Succeeded,
+		fetch$2Failed,
+	} from './actions';
 
 	/*
 	|--------------------------------------------------------------------------
-	| Individual exports for testing
+	| Saga Desc
 	|--------------------------------------------------------------------------
 	|
 	| Default saga
 	|
 	*/
 
-	export function fetch$1FromServer() {
-		const url = config.api.url.$1;
-		const options = config.api.fetchOptions;
+	export function fetch$2FromServer() {
+		const url = config.api.url.$2;
+		const options = config.api.fetchOptionsWithAuth({});
 
-		return fetch(url, options)
-			.then(response => response.json());
+		return fetch(url, options).then(fetchResponse);
 	}
 
-	export function* fetch$1() {
+	export function* fetch$2() {
 		try {
-			const results = yield call(fetch$1FromServer);
+			const results = yield call(fetch$2FromServer);
 
 			if (!results.success) {
-				yield put(request$1Failed(results.error.message));
+				yield put(fetch$2Failed(results.error.message));
 				return;
 			}
 
-			yield put(request$1Succeeded(results.data));
+			yield put(fetch$2Succeeded(results.data));
 		} catch (e) {
-			yield put(request$1Failed(e.message));
+			yield put(fetch$2Failed(e.message));
 		}
 	}
 
-	export function* fetch$1Saga() {
-		yield takeLatest(REQUEST_$1, fetch$1);
+	export function* fetch$2Saga() {
+		yield takeLatest(FETCH_$1, fetch$2);
 	}
 
 	/*
@@ -1392,9 +1400,246 @@ snippet newsagas
 	|
 	*/
 
-	export default [
-		fetch$1Saga,
-	];
+	export default function* rootSaga() {
+		yield all([
+			fetch$2Saga,
+		]);
+	}
+snippet :r.reducer.new React
+	import NProgress from 'nprogress';
+	import produce from 'immer';
+	import {
+		FETCH_${1:CONSTANT},
+		FETCH_$1_SUCCEEDED,
+		FETCH_$1_FAILED,
+	} from './constants';
+
+	export const initialState = {
+		error: '',
+		isValid: false,
+		isLoading: false,
+	};
+
+	/* eslint-disable default-case, no-param-reassign */
+	const ${2:Action}PageReducer = (state = initialState, action) => produce(state, draft => {
+		switch (action.type) {
+			case FETCH_$1:
+				NProgress.start();
+				draft.isLoading = true;
+				break;
+			case FETCH_$1_SUCCEEDED:
+				draft.isLoading = false;
+				NProgress.done();
+				break;
+			case FETCH_$1_FAILED:
+				draft.error = action.message;
+				draft.isValid = false;
+				NProgress.done();
+				break;
+		}
+	});
+
+	export default $2PageReducer;
+snippet :r.selectors.new React
+	import { createSelector } from 'reselect';
+	import { initialState } from './reducer';
+
+	/*
+	|--------------------------------------------------------------------------
+	| Domain
+	|--------------------------------------------------------------------------
+	|
+	| Selects the domain
+	|
+	*/
+
+	const select${1:MyCustomPage}Domain = state => state.${2:myCustomPage} || initialState;
+
+	/*
+	|--------------------------------------------------------------------------
+	| ${3:DESCRIPTION} Selector
+	|--------------------------------------------------------------------------
+	|
+	| Selects the primary data from state
+	|
+	*/
+
+	const makeSelect${4:DATA} = () => createSelector(
+		select$1Domain,
+		substate => substate.$4 || [],
+	);
+
+	/*
+	|--------------------------------------------------------------------------
+	| Is Loading Selector
+	|--------------------------------------------------------------------------
+	|
+	| Select the isLoading Bool
+	|
+	*/
+
+	const makeSelectIsLoading = () => createSelector(
+		select$1Domain,
+		substate => substate.isLoading || false,
+	);
+
+	/*
+	|--------------------------------------------------------------------------
+	| Error Selector
+	|--------------------------------------------------------------------------
+	|
+	| Selects the error str
+	|
+	*/
+
+	const makeSelectError = () => createSelector(
+		select$1Domain,
+		substate => substate.error || '',
+	);
+
+	/*
+	|--------------------------------------------------------------------------
+	| Default selector
+	|--------------------------------------------------------------------------
+	|
+	| Creates the page selector
+	|
+	*/
+
+	const makeSelect$1 = () => createSelector(
+		select$1Domain,
+		substate => substate || {},
+	);
+
+	export default makeSelect$1;
+	export {
+		select$1Domain,
+		makeSelect$4,
+		makeSelectIsLoading,
+		makeSelectError,
+	};
+snippet :r.page.new React
+	import React, { useEffect } from 'react';
+	import config from 'config';
+	import PropTypes from 'prop-types';
+	import withLayout from 'layouts/Default';
+	import { connect } from 'react-redux';
+	import { createStructuredSelector } from 'reselect';
+	import { compose } from 'redux';
+	import {
+		makeSelectIsLoading,
+		makeSelectError,
+	} from 'containers/${2:CONTAINER}/selectors';
+	import {
+		fetch${3:Action},
+	} from 'containers/$2/actions';
+	import PageHeader from 'components/PageHeader';
+	import ToolbarButton from 'components/ToolbarButton';
+	import ReactPlaceholder from 'react-placeholder';
+
+	const ${1:MyNewPage} = ({
+		fetch$3, // eslint-disable-line no-shadow
+		isLoading,
+		error,
+	}) => {
+		useEffect(() => {
+			fetch$3();
+		}, []);
+
+		return (
+			<>
+				<PageHeader breadcrumbs={config.admin.locksPage.breadcrumbs}>
+					<ToolbarButton
+						type="submit"
+						icon="trash-2"
+						titlle="Delete"
+						onClick={() => {}}
+						cta
+					/>
+				</PageHeader>
+
+				{error && (<div className="alert alert-danger" role="alert">{error}</div>)}
+
+				<ReactPlaceholder type="text" rows={7} ready={!isLoading} showLoadingAnimation>
+					Page Content
+				</ReactPlaceholder>
+
+			</>
+		);
+	};
+
+	/*
+	|--------------------------------------------------------------------------
+	| Title
+	|--------------------------------------------------------------------------
+	|
+	| Page Title
+	|
+	*/
+
+	$1.title = 'My New Page';
+
+	/*
+	|--------------------------------------------------------------------------
+	| propTypes
+	|--------------------------------------------------------------------------
+	|
+	| The page's prop types
+	|
+	*/
+
+	$1.propTypes = {
+		fetch$3: PropTypes.func.isRequired,
+		isLoading: PropTypes.bool.isRequired,
+		error: PropTypes.string.isRequired,
+	};
+
+	/*
+	|--------------------------------------------------------------------------
+	| defaultProps
+	|--------------------------------------------------------------------------
+	|
+	| Ensure non required props have defaults
+	|
+	*/
+
+	$1.defaultProps = {};
+
+	/*
+	|--------------------------------------------------------------------------
+	| State to Props
+	|--------------------------------------------------------------------------
+	|
+	| Map state to props
+	|
+	*/
+
+	const mapStateToProps = createStructuredSelector({
+		isLoading: makeSelectIsLoading(),
+		error: makeSelectError(),
+	});
+
+	function mapDispatchToProps(dispatch) {
+		return {
+			fetch$3: () => dispatch(fetch$3()),
+		};
+	}
+
+	const withConnect = connect(
+		mapStateToProps,
+		mapDispatchToProps,
+	);
+
+	/*
+	|--------------------------------------------------------------------------
+	| compose, withConnect, withLoginLayout
+	|--------------------------------------------------------------------------
+	|
+	| Export page connected to redux store/sagas.
+	|
+	*/
+
+	export default compose(withConnect)(withLayout($1));
 snippet cnames
 	import classNames from 'classnames';
 snippet styled
